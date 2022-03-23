@@ -5,7 +5,7 @@ import express from 'express';
 
 const args = minimist(process.argv.slice(2));
 args['port'];
-const port = args.port ||process.env.port|| 3000;
+const port = args.port || process.env.port || 3000;
 
 // Require Express.js
 const express = require('express')
@@ -13,7 +13,7 @@ const app = express()
 
 // Start an app server
 const server = app.listen(PortID, () => {
-    console.log('App listening on port %PORT%'.replace ('%PORT%',PortID))
+    console.log('App listening on port %PORT%'.replace('%PORT%',PortID))
 })
 
 // Default response for any other request
