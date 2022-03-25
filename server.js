@@ -3,8 +3,9 @@ import { coinFlip,coinFlips,countFlips,flipACoin } from './coin.mjs'
 import minimist from 'minimist';
 import express from 'express';
 
-const args = require("minimist")(process.argv.slice(2))
-args['port']
+const minimist = require("minimist")
+const args = minimist(process.argv.slice(2))
+args["port"]
 const port = args.port || process.env.port || 5000
 
 // Require Express.js
@@ -13,7 +14,7 @@ const app = express()
 
 // Start an app server
 const server = app.listen(PortID, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',PortID))
+    console.log('App listening on port : ' + PortID)
 })
 
 // Default response for any other request
@@ -23,20 +24,7 @@ app.use(function(req, res){
 
 app.get('/app/', (req, res) => {
     // Respond with status 200
-        res.statusCode = 200;
-    // Respond with status message "OK"
-        res.statusMessage = 'OK';
-        res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-        res.end(res.statusCode+ ' ' +res.statusMessage)
-});
-
-// Work to do, req.params.number references the number variable
-app.get('/app/flips/:number', (req, res) => {
-	const flips = manyflips(req.params.number)
-	//Other
-	//expressions
-	//go
-	//here
+        res.status(200).end("200 OK")
 });
 
 app.get('/app/flip/', (req, res) => {
@@ -44,12 +32,11 @@ app.get('/app/flip/', (req, res) => {
     res.status(200).json({ 'flip' : result});
 });
 
+// Work to do, req.params.number references the number variable
 app.get('/app/flips/:number', (req, res) => {
-    n = req.params.number
-    rawResults = coinFlips(n)
-    summaryResults = countFlips(rawResults)
-    res.status(200).json({ 'raw' : rawResults, 'summary' : summaryResults});
-})
+	const flips = coinFlips(req.params.number)
+	res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
+});
 
 app.get('/app/flip/call/tails', (req, res) => {
     res.status(200).json({ 'result' : flipACoin('tails')});
