@@ -5,7 +5,7 @@ import express from 'express';
 
 const args = minimist(process.argv.slice(2));
 args['port'];
-const port = args.port || process.env.port || 3000;
+const port = args.port || process.env.port || 5000
 
 // Require Express.js
 const express = require('express')
