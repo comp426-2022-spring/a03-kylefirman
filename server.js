@@ -3,7 +3,7 @@ import { coinFlip,coinFlips,countFlips,flipACoin } from './coin.mjs'
 import minimist from 'minimist';
 import express from 'express';
 
-const minimist = require("minimist")
+const minimist = require('minimist')
 const args = minimist(process.argv.slice(2))
 args["port"]
 const port = args.port || process.env.port || 5000
@@ -14,8 +14,8 @@ const app = express()
 
 // Start an app server
 const server = app.listen(PortID, () => {
-    console.log('App listening on port : ' + PortID)
-})
+    console.log('App listening on port %PORT%'.replace('%PORT%', PortID))
+});
 
 // Default response for any other request
 app.use(function(req, res){
