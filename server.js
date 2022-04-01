@@ -1,12 +1,12 @@
 // Importing Functions
-import { coinFlip,coinFlips,countFlips,flipACoin } from './coin.mjs'
+//import { coinFlip,coinFlips,countFlips,flipACoin } from './coin.mjs'
 import minimist from 'minimist';
 import express from 'express';
 
 const minimist = require('minimist')
 const args = minimist(process.argv.slice(2))
 args["port"]
-const port = args.port || process.env.port || 5000
+const PortID = args.port || process.env.port || 5000
 
 // Require Express.js
 const express = require('express')
@@ -45,3 +45,48 @@ app.get('/app/flip/call/tails', (req, res) => {
 app.get('/app/flip/call/heads', (req, res) => {
     res.status(200).json({ 'result' : flipACoin('heads')})
 })
+
+//Coin functions
+function coinFlip() {
+    let flipped = Math.floor(Math.random() * 2)
+    if (flipped == 0) {
+      return "heads";
+    } else {
+      return "tails";
+    }
+}
+
+function coinFlips(flips) {
+    let results = [flips];
+    for (let i = 0; i < flips; i++) {
+      results[i] = coinFlip();
+    }
+    return results;
+}
+
+function countFlips(array) {
+    let headcount = 0;
+    let tailscount = 0;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] == "heads") {
+        headcount++;
+      } else {
+        tailscount++;
+      }
+    }
+    let FlipResults = ["heads " + headcount, "tails " + tailscount];
+    return FlipResults;
+}
+
+function flipACoin(call) {
+    let actual = coinFlip();
+    if (call.equals(actual)) {
+      let flipGame = ["call: " + call, "flip: " + actual, "result: win"];
+    } else {
+      let flipGame = ["call: " + call, "flip: " + actual, "result: lose"];
+    }
+    return flipGame;
+}
+
+
+
