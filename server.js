@@ -28,8 +28,8 @@ app.get('/app/', (req, res) => {
 });
 
 app.get('/app/flip/', (req, res) => {
-    result = coinFlip();
-    res.status(200).json({ 'flip' : result});
+    var result = coinFlip();
+    res.status(200).json({ 'flip' : result})
 });
 
 // Work to do, req.params.number references the number variable
@@ -39,9 +39,9 @@ app.get('/app/flips/:number', (req, res) => {
 });
 
 app.get('/app/flip/call/tails', (req, res) => {
-    res.status(200).json({ 'result' : flipACoin('tails')});
+    res.status(200).json({ 'result' : flipACoin('tails')})
 })
 
 app.get('/app/flip/call/heads', (req, res) => {
-    res.status(200).json({ 'result' : flipACoin('heads')});
+    res.status(200).json({ 'result' : flipACoin('heads')})
 })
