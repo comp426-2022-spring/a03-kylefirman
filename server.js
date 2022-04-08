@@ -52,6 +52,7 @@ function flipACoin(call) {
     let result = "lose";
   }
   return { "call": call, "flip": actual, "result": result};
+}
 
 app.get('/app/flip/', (req, res) => {
   const flip = coinFlip()
