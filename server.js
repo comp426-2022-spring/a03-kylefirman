@@ -25,11 +25,11 @@ function coinFlip() {
 }
   
 function coinFlips(flips) {
-    const values = []
-    for (let i = 0; i < flips; i++) {
-      values[i] = coinFlip()
-    }
-    return values
+  let results = [flips];
+  for (let i = 0; i < flips; i++) {
+    results[i] = coinFlip();
+  }
+  return results;
 }
   
 function countFlips(array) {
@@ -42,7 +42,6 @@ function countFlips(array) {
       tailscount++;
     }
   }
-  let FlipResults = ["heads " + headcount, "tails " + tailscount];
   return {"heads": headcount, "tails": tailscount};
 }
   
