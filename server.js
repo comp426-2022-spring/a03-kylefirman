@@ -13,9 +13,7 @@ const server = app.listen(port, () => {
 
 app.get('/app/', (req, res) => {
       res.statusCode = 200;
-      res.statusMessage = 'OK';
-      res.end(res.statusCode+ ' ' +res.statusMessage);
-      res.type("text/plain");
+      res.end(res.statusCode + "OK");
 });
 
 function coinFlip() {
