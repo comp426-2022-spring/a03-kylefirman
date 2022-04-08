@@ -17,43 +17,44 @@ app.get('/app/', (req, res) => {
 });
 
 function coinFlip() {
-    if (Math.random() >= 0.5) {
-      return "heads"
-    } else {
-      return "tails"
-    }
+  let flipped = Math.floor(Math.random() * 2)
+  if (flipped == 0) {
+    return "heads";
+  } else {
+    return "tails";
+  }
 }
   
 function coinFlips(flips) {
-    const values = []
-    for (let i = 0; i < flips; i++) {
-      values[i] = coinFlip()
-    }
-    return values
+  let results = [flips];
+  for (let i = 0; i < flips; i++) {
+    results[i] = coinFlip();
+  }
+  return results;
 }
   
 function countFlips(array) {
-    let count = { heads: 0, tails: 0 }
-  array.forEach(element => 
-    { if (element == "heads") {
-      count.heads += 1
+  let headcount = 0;
+  let tailscount = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == "heads") {
+      headcount++;
     } else {
-      count.tails += 1
+      tailscount++;
     }
-   })
-   return count
+  }
+  let FlipResults = ["heads " + headcount, "tails " + tailscount];
+  return FlipResults;
 }
   
 function flipACoin(call) {
-    let coin = { call: call, flip: "NULL", result: "NULL"}
-    let flip = coinFlip()
-    coin.flip = flip
-    if (call == flip) {
-      coin.result = "win"
-    } else {
-      coin.result = "lose"
-    }
-    return coin
+  let actual = coinFlip();
+  if (call.equals(actual)) {
+    let flipGame = ["call: " + call, "flip: " + actual, "result: win"];
+  } else {
+    let flipGame = ["call: " + call, "flip: " + actual, "result: lose"];
+  }
+  return flipGame;
 }
 
 app.get('/app/flip/', (req, res) => {
