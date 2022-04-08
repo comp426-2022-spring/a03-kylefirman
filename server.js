@@ -33,15 +33,17 @@ function coinFlips(flips) {
 }
   
 function countFlips(array) {
-    let count = { heads: 0, tails: 0 }
-  array.forEach(element => 
-    { if (element == "heads") {
-      count.heads += 1
+  let headcount = 0;
+  let tailscount = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == "heads") {
+      headcount++;
     } else {
-      count.tails += 1
+      tailscount++;
     }
-   })
-   return count
+  }
+  let FlipResults = ["heads " + headcount, "tails " + tailscount];
+  return FlipResults;
 }
   
 function flipACoin(call) {
