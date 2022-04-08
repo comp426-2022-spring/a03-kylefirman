@@ -17,11 +17,12 @@ app.get('/app/', (req, res) => {
 });
 
 function coinFlip() {
-    if (Math.random() >= 0.5) {
-      return "heads"
-    } else {
-      return "tails"
-    }
+  let flipped = Math.floor(Math.random() * 2)
+  if (flipped == 0) {
+    return "heads";
+  } else {
+    return "tails";
+  }
 }
   
 function coinFlips(flips) {
