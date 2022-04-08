@@ -58,7 +58,7 @@ function flipACoin(call) {
     return coin
 }
 
-//more backend API endpoints
+//more backend API
 app.get('/app/flip/', (req, res) => {
   const flip = coinFlip()
 	res.status(200).json({"flip" : flip})
@@ -66,7 +66,8 @@ app.get('/app/flip/', (req, res) => {
 
 app.get('/app/flips/:number', (req, res) => {
   const flips = coinFlips(req.params.number)
-  res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
+  const counted = countFlips(flips)
+  res.status(200).json({"raw" : flips, "summary" : counted})
 });
 
 app.get('/app/flip/call/:call', (req, res) => {
