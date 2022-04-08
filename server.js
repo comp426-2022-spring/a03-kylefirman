@@ -45,12 +45,11 @@ function countFlips(array) {
 }
   
 function flipACoin(call) {
-  var flip = coinFlip();
-  var result = "";
+  var flip = coinFlip()
   if (call == flip) {
-    result = "win"
+    var result = "win"
   } else {
-    result = "lose"
+    var result = "lose"
   }
   return {"call": call, "flip": flip, "result": result};
 }
