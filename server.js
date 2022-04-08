@@ -47,12 +47,11 @@ function countFlips(array) {
 function flipACoin(call) {
   let actual = coinFlip();
   if (call.equals(actual)) {
-    let flipGame = ["call: " + call, "flip: " + actual, "result: win"];
+    let result = "win";
   } else {
-    let flipGame = ["call: " + call, "flip: " + actual, "result: lose"];
+    let result = "lose";
   }
-  return flipGame;
-}
+  return { "call": call, "flip": actual, "result": result};
 
 app.get('/app/flip/', (req, res) => {
   const flip = coinFlip()
