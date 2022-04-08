@@ -1,10 +1,9 @@
-//if i even add a comment
+//irequire express and then minimist splicing
 const express = require('express')
 const app = express()
+
 const args = require('minimist')(process.argv.slice(2))
-
 args["port"]
-
 const port = args.port || process.env.PORT || 5000;
 
 const server = app.listen(port, () => {
@@ -16,6 +15,8 @@ app.get('/app/', (req, res) => {
       res.end(res.statusCode + "OK");
 });
 
+
+//Coin Functions because importing them wouldnt work 
 function coinFlip() {
   let flipped = Math.floor(Math.random() * 2)
   if (flipped == 0) {
@@ -56,6 +57,8 @@ function flipACoin(call) {
   return {"call": call, "flip": flip, "result": result};
 }
 
+
+//rest of API endpoints
 app.get('/app/flip/', (req, res) => {
   const flip = coinFlip()
 	res.status(200).json({"flip" : flip})
@@ -63,8 +66,7 @@ app.get('/app/flip/', (req, res) => {
 
 app.get('/app/flips/:number', (req, res) => {
   const flips = coinFlips(req.params.number)
-  const counted = countFlips(flips)
-  res.status(200).json({"raw" : flips, "summary" : counted})
+  res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
 });
 
 app.get('/app/flip/call/:call', (req, res) => {
