@@ -1,5 +1,6 @@
 //irequire express and then minimist splicing
-const express = require('express')
+const express = require('express');
+const res = require('express/lib/response');
 const app = express()
 
 const args = require('minimist')(process.argv.slice(2))
@@ -69,12 +70,16 @@ app.get('/app/flips/:number', (req, res) => {
   res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
 });
 
-app.get('/app/flip/call/:call', (req, res) => {
-  const called = flipACoin(req.params.call)
-  res.status(200).json({called})
+app.get('/app/flip/call/tails', (req, res) => {
+  res.statusCode = 200
+  res.json(flipACoin("tails"))
+});
+
+app.get('/app/flip/call/heads', (req, res) => {
+  res.statusCode = 200
+  res.json(flipACoin("heads"))
 });
 
 app.use(function(req, res){
-  res.statusCode = 404;
-  res.end(res.statusCode + " NOT FOUND");
+  res.status(404).send("404 NOT FOUND")
 });
