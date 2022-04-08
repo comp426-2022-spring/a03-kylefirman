@@ -17,34 +17,31 @@ app.get('/app/', (req, res) => {
 });
 
 function coinFlip() {
-  let flipped = Math.floor(Math.random() * 2)
-  if (flipped == 0) {
-    return "heads";
-  } else {
-    return "tails";
-  }
+    if (Math.random() >= 0.5) {
+      return "heads"
+    } else {
+      return "tails"
+    }
 }
   
 function coinFlips(flips) {
-  let results = [flips];
-  for (let i = 0; i < flips; i++) {
-    results[i] = coinFlip();
-  }
-  return results;
+    const values = []
+    for (let i = 0; i < flips; i++) {
+      values[i] = coinFlip()
+    }
+    return values
 }
   
 function countFlips(array) {
-  let headcount = 0;
-  let tailscount = 0;
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] == "heads") {
-      headcount++;
+    let count = { heads: 0, tails: 0 }
+  array.forEach(element => 
+    { if (element == "heads") {
+      count.heads += 1
     } else {
-      tailscount++;
+      count.tails += 1
     }
-  }
-  let FlipResults = ["heads " + headcount, "tails " + tailscount];
-  return FlipResults;
+   })
+   return count
 }
   
 function flipACoin(call) {
