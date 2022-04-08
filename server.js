@@ -43,7 +43,7 @@ function countFlips(array) {
     }
   }
   let FlipResults = ["heads " + headcount, "tails " + tailscount];
-  return FlipResults;
+  return {"heads": headcount, "tails": tailscount};
 }
   
 function flipACoin(call) {
