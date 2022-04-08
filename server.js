@@ -6,57 +6,59 @@ const args = require('minimist')(process.argv.slice(2))
 args["port"]
 const portID = args.port || process.env.PORT || 5000;
 
-//server backend
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%', portID))
 });
 
 app.get('/app/', (req, res) => {
       res.statusCode = 200;
-      res.end(res.statusCode + " OK");
+      res.statusMessage = 'OK';
+      res.end(res.statusCode+ ' ' +res.statusMessage);
+      res.type("text/plain");
 });
 
+//coin functions because import doesnt work for some reason
 function coinFlip() {
-  let flipped = Math.floor(Math.random() * 2)
-  if (flipped == 0) {
-    return "heads";
-  } else {
-    return "tails";
-  }
+    if (Math.random() >= 0.5) {
+      return "heads"
+    } else {
+      return "tails"
+    }
 }
   
 function coinFlips(flips) {
-  let results = [flips];
-  for (let i = 0; i < flips; i++) {
-    results[i] = coinFlip();
-  }
-  return results;
+    const values = []
+    for (let i = 0; i < flips; i++) {
+      values[i] = coinFlip()
+    }
+    return values
 }
   
 function countFlips(array) {
-  let headcount = 0;
-  let tailscount = 0;
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] == "heads") {
-      headcount++;
+    let count = { heads: 0, tails: 0 }
+  array.forEach(element => 
+    { if (element == "heads") {
+      count.heads += 1
     } else {
-      tailscount++;
+      count.tails += 1
     }
-  }
-  let FlipResults = ["heads " + headcount, "tails " + tailscount];
-  return FlipResults;
+   })
+   return count
 }
   
 function flipACoin(call) {
-  let actual = coinFlip();
-  if (call.equals(actual)) {
-    let flipGame = ["call: " + call, "flip: " + actual, "result: win"];
-  } else {
-    let flipGame = ["call: " + call, "flip: " + actual, "result: lose"];
-  }
-  return flipGame;
+    let coin = { call: call, flip: "NULL", result: "NULL"}
+    let flip = coinFlip()
+    coin.flip = flip
+    if (call == flip) {
+      coin.result = "win"
+    } else {
+      coin.result = "lose"
+    }
+    return coin
 }
 
+//more backend API endpoints
 app.get('/app/flip/', (req, res) => {
   const flip = coinFlip()
 	res.status(200).json({"flip" : flip})
@@ -68,10 +70,13 @@ app.get('/app/flips/:number', (req, res) => {
 });
 
 app.get('/app/flip/call/:call', (req, res) => {
-  const guess = flipACoin(req.params.call)
-  res.status(200).json({guess})
+  const called = flipACoin(req.params.call)
+  res.status(200).json({called})
 });
 
 app.use(function(req, res){
-  res.end("404 NOT FOUND");
+  res.statusCode = 404;
+      res.statusMessage = 'NOT FOUND';
+      res.end(res.statusCode+ ' ' +res.statusMessage);
+      res.type("text/plain");
 });
