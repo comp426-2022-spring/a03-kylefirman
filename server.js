@@ -51,7 +51,7 @@ function flipACoin(call) {
   } else {
     let result = "lose";
   }
-  return { "call": call, "flip": actual, "result": result};
+  return { call: call, flip: actual, result: result};
 }
 
 app.get('/app/flip/', (req, res) => {
