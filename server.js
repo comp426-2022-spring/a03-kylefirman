@@ -45,13 +45,14 @@ function countFlips(array) {
 }
   
 function flipACoin(call) {
-  let actual = coinFlip();
-  if (call.equals(actual)) {
-    let result = "win";
+  var flip = coinFlip();
+  var result = "";
+  if (call == flip) {
+    result = "win"
   } else {
-    let result = "lose";
+    result = "lose"
   }
-  return { call: call, flip: actual, result: result};
+  return {"call": call, "flip": flip, "result": result};
 }
 
 app.get('/app/flip/', (req, res) => {
