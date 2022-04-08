@@ -76,7 +76,5 @@ app.get('/app/flip/call/:call', (req, res) => {
 
 app.use(function(req, res){
   res.statusCode = 404;
-      res.statusMessage = 'NOT FOUND';
-      res.end(res.statusCode+ ' ' +res.statusMessage);
-      res.type("text/plain");
+  res.end(res.statusCode + " NOT FOUND");
 });
