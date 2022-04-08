@@ -1,60 +1,60 @@
+//require express and minimist
 const express = require('express')
 const app = express()
+
 const args = require('minimist')(process.argv.slice(2))
-
 args["port"]
+const portID = args.port || process.env.PORT || 5000;
 
-const port = args.port || process.env.PORT || 5000;
-
+//server backend
 const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%', port))
+    console.log('App listening on port %PORT%'.replace('%PORT%', portID))
 });
 
 app.get('/app/', (req, res) => {
       res.statusCode = 200;
-      res.statusMessage = 'OK';
-      res.end(res.statusCode+ ' ' +res.statusMessage);
-      res.type("text/plain");
+      res.end(res.statusCode + " OK");
 });
 
 function coinFlip() {
-    if (Math.random() >= 0.5) {
-      return "heads"
-    } else {
-      return "tails"
-    }
+  let flipped = Math.floor(Math.random() * 2)
+  if (flipped == 0) {
+    return "heads";
+  } else {
+    return "tails";
+  }
 }
   
 function coinFlips(flips) {
-    const values = []
-    for (let i = 0; i < flips; i++) {
-      values[i] = coinFlip()
-    }
-    return values
+  let results = [flips];
+  for (let i = 0; i < flips; i++) {
+    results[i] = coinFlip();
+  }
+  return results;
 }
   
 function countFlips(array) {
-    let count = { heads: 0, tails: 0 }
-  array.forEach(element => 
-    { if (element == "heads") {
-      count.heads += 1
+  let headcount = 0;
+  let tailscount = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == "heads") {
+      headcount++;
     } else {
-      count.tails += 1
+      tailscount++;
     }
-   })
-   return count
+  }
+  let FlipResults = ["heads " + headcount, "tails " + tailscount];
+  return FlipResults;
 }
   
 function flipACoin(call) {
-    let coin = { call: call, flip: "NULL", result: "NULL"}
-    let flip = coinFlip()
-    coin.flip = flip
-    if (call == flip) {
-      coin.result = "win"
-    } else {
-      coin.result = "lose"
-    }
-    return coin
+  let actual = coinFlip();
+  if (call.equals(actual)) {
+    let flipGame = ["call: " + call, "flip: " + actual, "result: win"];
+  } else {
+    let flipGame = ["call: " + call, "flip: " + actual, "result: lose"];
+  }
+  return flipGame;
 }
 
 app.get('/app/flip/', (req, res) => {
@@ -64,18 +64,14 @@ app.get('/app/flip/', (req, res) => {
 
 app.get('/app/flips/:number', (req, res) => {
   const flips = coinFlips(req.params.number)
-  const counted = countFlips(flips)
-  res.status(200).json({"raw" : flips, "summary" : counted})
+  res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
 });
 
 app.get('/app/flip/call/:call', (req, res) => {
-  const called = flipACoin(req.params.call)
-  res.status(200).json({called})
+  const guess = flipACoin(req.params.call)
+  res.status(200).json({guess})
 });
 
 app.use(function(req, res){
-  res.statusCode = 404;
-      res.statusMessage = 'NOT FOUND';
-      res.end(res.statusCode+ ' ' +res.statusMessage);
-      res.type("text/plain");
+  res.end("404 NOT FOUND");
 });
